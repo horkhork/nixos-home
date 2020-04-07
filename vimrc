@@ -1,17 +1,23 @@
-call plug#begin()
-"Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'chazy/dirsettings'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'embear/vim-foldsearch'
-Plug 'godoctor/godoctor.vim'
-Plug 'horkhork/markdownIR.vim'
-Plug 'jamessan/vim-gnupg'
-"Plug 'jceb/vim-orgmode'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'skywind3000/asyncrun.vim'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-call plug#end()
+"if empty(glob('~/.vim/autoload/plug.vim'))
+"  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+"endif
+"
+"call plug#begin()
+""Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+"Plug 'AndrewRadev/splitjoin.vim'
+"Plug 'chazy/dirsettings'
+"Plug 'dhruvasagar/vim-table-mode'
+"Plug 'embear/vim-foldsearch'
+"Plug 'godoctor/godoctor.vim'
+"Plug 'horkhork/markdownIR.vim'
+"Plug 'jamessan/vim-gnupg'
+""Plug 'jceb/vim-orgmode'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'skywind3000/asyncrun.vim'
+"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"call plug#end()
 
 " Execute the current line in a bash subprocess
 nnoremap ,w :.w !bash<CR>

@@ -20,7 +20,9 @@
 #};
 #in {
 
-{
+let
+  homedir = builtins.getEnv "HOME";
+in {
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -44,6 +46,9 @@
     pkgs.traceroute
     pkgs.unzip
     pkgs.wget
+    #pkgs.zsh
+    #pkgs.zsh-powerlevel9k
+    pkgs.nerdfonts
   ];
 
   programs.broot = {
@@ -63,9 +68,9 @@
     enableZshIntegration = true;
   };
   
-  programs.go = {
-    enable = true;
-  };
+  #programs.go = {
+  #  enable = true;
+  #};
   
   programs.git = {
     enable = true;
@@ -107,12 +112,12 @@
     };
   };
 
-  programs.gpg.enable = true;
+  #programs.gpg.enable = true;
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  programs.info.enable = true;
+  #programs.info.enable = true;
 
   programs.jq.enable = true;
 
@@ -121,17 +126,18 @@
   #  enableZshIntegration = true;
   #};
 
-  programs.lesspipe.enable = true;
+  #programs.lesspipe.enable = true;
 
-  programs.newsboat = {
-    enable = true;
-  };
+  #programs.newsboat = {
+  #  enable = true;
+  #};
 
-  programs.readline.enable = true;
+  #programs.readline.enable = true;
 
   #programs.starship = {
   #  enable = true;
-  #  enableZshIntegration = true;
+  #  #enableZshIntegration = true;
+  #  enableBashIntegration = true;
   #};
 
   programs.taskwarrior = {
@@ -149,7 +155,7 @@ report.list.columns = [ "id" "start.age" "entry.age" "totalactivetime" "depends.
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      set -g default-shell /usr/bin/zsh
+      #set -g default-shell /home/ssosik/.nix-profile/bin/zsh
       set -g default-terminal "xterm-256color"
       set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
       set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
@@ -215,24 +221,27 @@ report.list.columns = [ "id" "start.age" "entry.age" "totalactivetime" "depends.
   #    share = true;
   #    size = 100000;
   #  };
-  #  #localVariables = {
-  #  #  ZSH_TMUX_ITERM2 = true;
-  #  #  POWERLEVEL9K_MODE = "nerdfont-complete";
-  #  #  COMPLETION_WAITING_DOTS = true;
-  #  #};
-  #  #oh-my-zsh = {
-  #  #  enable = true;
-  #  #  plugins = [ "git" "history" "taskwarrior" "tmux" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" 
-  #  #  #theme = "powerlevel9k/powerlevel9k";
-  #  #};
-
-  #  
+  #  localVariables = {
+  #    ZSH_TMUX_ITERM2 = true;
+  #    POWERLEVEL9K_MODE = "nerdfont-complete";
+  #    COMPLETION_WAITING_DOTS = true;
+  #    ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
+  #  };
+  #  oh-my-zsh = {
+  #    enable = true;
+  #    plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux" 
+  #    #theme = "powerlevel9k/powerlevel9k";
+  #    #theme = "${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k";
+  #    theme = "zsh-powerlevel9k/powerlevel9k";
+  #    #theme = "robbyrussell";
+  #    #theme = "agnoster";
+  #  };
   #};
 
-  services.gpg-agent = {
-    enable = true;
-  };
+  #services.gpg-agent = {
+  #  enable = true;
+  #};
 
-  services.lorri.enable = true;
+  #services.lorri.enable = true;
 
 }
