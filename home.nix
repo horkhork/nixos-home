@@ -68,8 +68,6 @@ in {
     pkgs.traceroute
     pkgs.unzip
     pkgs.wget
-    #pkgs.zsh
-    #pkgs.zsh-powerlevel9k
     pkgs.zsh-powerlevel10k
     pkgs.nerdfonts
     vaultWorkspace
@@ -91,10 +89,6 @@ in {
     enable = true;
     enableZshIntegration = true;
   };
-  
-  #programs.go = {
-  #  enable = true;
-  #};
   
   programs.git = {
     enable = true;
@@ -203,7 +197,6 @@ in {
   
   programs.vim = {
     enable = true;
-    #extraConfig = builtins.readFile "${dotfiles}/.vimrc";
     extraConfig = builtins.readFile "/home/ssosik/.config/nixpkgs/vimrc";
     #settings = {
     #   relativenumber = true;
@@ -268,9 +261,7 @@ in {
       ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
       POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
     };
-    envExtra = ''
-source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-    '';
+    envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux" 
