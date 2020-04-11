@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-#with import <nixpkgs> {};
+with import <nixpkgs> {};
 #with builtins;
 #with lib;
 #with import <home-manager/modules/lib/dag.nix> { inherit lib; };
@@ -22,6 +22,28 @@
 
 let
   homedir = builtins.getEnv "HOME";
+  workspace = homedir + "/workspace";
+
+  createP4Client = pkgs.writeShellScriptBin "createP4Client" ''
+name=$1 # client name to create
+template=$2 # client to use as a template
+  '';
+
+  vaultWorkspace = stdenv.mkDerivation {
+    name = "fetch-vault-repo";
+    src = builtins.fetchGit {
+      url = "ssh://git@git.source.akamai.com:7999/sources/vault.git";
+      rev = "4c647e4a9931cff3614e779203835285212e409e";
+    };
+    #buildInputs = [ homedir ];
+    buildPhase = ''
+      echo BUILD OUT $out $src ${workspace} foo
+    '';
+    installPhase = ''
+      echo INSTALL OUT $out
+      mkdir -p $out
+    '';
+  };
 in {
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -48,7 +70,9 @@ in {
     pkgs.wget
     #pkgs.zsh
     #pkgs.zsh-powerlevel9k
+    pkgs.zsh-powerlevel10k
     pkgs.nerdfonts
+    vaultWorkspace
   ];
 
   programs.broot = {
@@ -134,6 +158,20 @@ in {
 
   #programs.readline.enable = true;
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "git.source.akamai.com" = {
+        identityFile = "/home/ssosik/.ssh/2020-01-10";
+        extraOptions = { StrictHostKeyChecking = "No"; };
+      };
+      "p4.source.akamai.com" = {
+        identityFile = "/home/ssosik/.ssh/2020-01-10";
+        extraOptions = { StrictHostKeyChecking = "No"; };
+      };
+    };
+  };
+
   #programs.starship = {
   #  enable = true;
   #  #enableZshIntegration = true;
@@ -146,9 +184,9 @@ in {
     dataLocation = "$HOME/.task";
     config = {
       uda.totalactivetime.type = "duration";
-uda.totalactivetime.label = "Total active time";
-report.list.labels = [ "ID" "Active" "Age" "TimeSpent" "D" "P" "Project" "Tags" "R" "Sch" "Due" "Until" "Description" "Urg" ];
-report.list.columns = [ "id" "start.age" "entry.age" "totalactivetime" "depends.indicator" "priority" "project" "tags" "recur.indicator" "scheduled.countdown" "due" "until.remaining" "description.count" "urgency" ];
+      uda.totalactivetime.label = "Total active time";
+      report.list.labels = [ "ID" "Active" "Age" "TimeSpent" "D" "P" "Project" "Tags" "R" "Sch" "Due" "Until" "Description" "Urg" ];
+      report.list.columns = [ "id" "start.age" "entry.age" "totalactivetime" "depends.indicator" "priority" "project" "tags" "recur.indicator" "scheduled.countdown" "due" "until.remaining" "description.count" "urgency" ];
     };
   };
 
@@ -209,34 +247,36 @@ report.list.columns = [ "id" "start.age" "entry.age" "totalactivetime" "depends.
     ];
   };
 
-  #programs.zsh = {
-  #  enable = true;
-  #  enableAutosuggestions = true;
-  #  enableCompletion = true;
-  #  autocd = true;
-  #  dotDir = ".config/zsh";
-  #  history = {
-  #    extended = true;
-  #    save = 100000;
-  #    share = true;
-  #    size = 100000;
-  #  };
-  #  localVariables = {
-  #    ZSH_TMUX_ITERM2 = true;
-  #    POWERLEVEL9K_MODE = "nerdfont-complete";
-  #    COMPLETION_WAITING_DOTS = true;
-  #    ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
-  #  };
-  #  oh-my-zsh = {
-  #    enable = true;
-  #    plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux" 
-  #    #theme = "powerlevel9k/powerlevel9k";
-  #    #theme = "${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k";
-  #    theme = "zsh-powerlevel9k/powerlevel9k";
-  #    #theme = "robbyrussell";
-  #    #theme = "agnoster";
-  #  };
-  #};
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    autocd = true;
+    dotDir = ".config/zsh";
+    history = {
+      extended = true;
+      save = 100000;
+      share = true;
+      size = 100000;
+    };
+    localVariables = {
+      ZSH_TMUX_ITERM2 = true;
+      POWERLEVEL9K_MODE = "nerdfont-complete";
+      COMPLETION_WAITING_DOTS = true;
+      ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
+    };
+    envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux" 
+      #theme = "powerlevel9k/powerlevel9k";
+      #theme = "${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k";
+      #theme = "zsh-powerlevel10k/powerlevel10k";
+      theme = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      #theme = "robbyrussell";
+      #theme = "agnoster";
+    };
+  };
 
   #services.gpg-agent = {
   #  enable = true;
