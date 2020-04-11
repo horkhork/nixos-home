@@ -193,7 +193,7 @@ in {
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      #set -g default-shell /home/ssosik/.nix-profile/bin/zsh
+      set -g default-shell /home/ssosik/.nix-profile/bin/zsh
       set -g default-terminal "xterm-256color"
       set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
       set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
@@ -280,12 +280,6 @@ fi
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux" 
-      #theme = "powerlevel9k/powerlevel9k";
-      #theme = "${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k";
-      #theme = "zsh-powerlevel10k/powerlevel10k";
-      #theme = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      #theme = "robbyrussell";
-      #theme = "agnoster";
     };
   };
 
