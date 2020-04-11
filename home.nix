@@ -247,6 +247,8 @@ in {
     ];
   };
 
+  home.file.".config/zsh/.p10k.zsh".text = builtins.readFile "/home/ssosik/.config/nixpkgs/p10k.cfg";
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -264,15 +266,24 @@ in {
       POWERLEVEL9K_MODE = "nerdfont-complete";
       COMPLETION_WAITING_DOTS = true;
       ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
+      POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
     };
-    envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    envExtra = ''
+source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "$${XDG_CACHE_HOME:-$$HOME/.cache}/p10k-instant-prompt-$${(%):-%n}.zsh" ]]; then
+  source "$${XDG_CACHE_HOME:-$$HOME/.cache}/p10k-instant-prompt-$${(%):-%n}.zsh"
+fi
+    '';
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux" 
       #theme = "powerlevel9k/powerlevel9k";
       #theme = "${pkgs.zsh-powerlevel9k}/share/zsh-powerlevel9k/powerlevel9k";
       #theme = "zsh-powerlevel10k/powerlevel10k";
-      theme = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      #theme = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       #theme = "robbyrussell";
       #theme = "agnoster";
     };
