@@ -55,6 +55,19 @@ in {
   # changes in each release.
   home.stateVersion = "19.09";
 
+  home.language.base = "en_US.UTF-8";
+
+  home.sessionVariables = {
+    LESSCLOSE = "/usr/bin/lesspipe %s %s";
+    #LESSOPEN =| "/usr/bin/lesspipe %s";
+    NIX_PATH = "/home/ssosik/.nix-defexpr/channels";
+    NIX_PROFILES = "/nix/var/nix/profiles/default /home/ssosik/.nix-profile";
+    NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+    NSS_DEFAULT_DB_TYPE = "sql";
+    PATH = "/home/ssosik/.nix-profile/bin:$PATH";
+    SHELL = "/home/ssosik/.nix-profile/bin/zsh";
+  };
+
   home.packages = [
     pkgs.asciidoc
     pkgs.curl
@@ -187,7 +200,7 @@ in {
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      #set -g default-shell /home/ssosik/.nix-profile/bin/zsh
+      set -g default-shell /home/ssosik/.nix-profile/bin/zsh
       set -g default-terminal "xterm-256color"
       set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
       set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
