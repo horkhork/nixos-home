@@ -66,6 +66,7 @@ in {
     NSS_DEFAULT_DB_TYPE = "sql";
     PATH = "/home/ssosik/.nix-profile/bin:$PATH";
     SHELL = "/home/ssosik/.nix-profile/bin/zsh";
+    LOCALE_ARCHIVE = "/usr/lib/locale/locale-archive";
   };
 
   home.packages = [
