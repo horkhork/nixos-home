@@ -177,6 +177,10 @@ in {
         identityFile = "/home/ssosik/.ssh/2020-01-10";
         extraOptions = { StrictHostKeyChecking = "No"; };
       };
+      "p4.ops.akamai.com" = {
+        identityFile = "/home/ssosik/.ssh/2020-01-10";
+        extraOptions = { StrictHostKeyChecking = "No"; };
+      };
     };
   };
 
