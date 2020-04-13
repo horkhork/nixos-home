@@ -98,12 +98,12 @@ in {
     enable = true;
     enableZshIntegration = true;
   };
-  
+
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
   };
-  
+
   programs.git = {
     enable = true;
     userName = "Steve Sosik";
@@ -145,7 +145,7 @@ in {
   };
 
   #programs.gpg.enable = true;
-  
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -168,21 +168,45 @@ in {
 
   programs.ssh = {
     enable = true;
-    matchBlocks = {
-      "git.source.akamai.com" = {
-        identityFile = "/home/ssosik/.ssh/2020-01-10";
-        extraOptions = { StrictHostKeyChecking = "No"; };
-      };
-      "p4.source.akamai.com" = {
-        identityFile = "/home/ssosik/.ssh/2020-01-10";
-        extraOptions = { StrictHostKeyChecking = "No"; };
-      };
-      "p4.ops.akamai.com" = {
-        identityFile = "/home/ssosik/.ssh/2020-01-10";
-        extraOptions = { StrictHostKeyChecking = "No"; };
-      };
-    };
+    #matchBlocks = {
+    #  "git.source.akamai.com" = {
+    #    identityFile = "/home/ssosik/.ssh/2020-01-10";
+    #    extraOptions = { StrictHostKeyChecking = "No"; };
+    #  };
+    #  "p4.source.akamai.com" = {
+    #    identityFile = "/home/ssosik/.ssh/2020-01-10";
+    #    extraOptions = { StrictHostKeyChecking = "No"; };
+    #  };
+    #  "p4.ops.akamai.com" = {
+    #    identityFile = "/home/ssosik/.ssh/2020-01-10";
+    #    extraOptions = { StrictHostKeyChecking = "No"; };
+    #  };
+    #};
   };
+  home.file.".ssh/rc".text = ''
+if [ ! -S ~/.ssh/ssh_auth_sock ] && [ -S "$SSH_AUTH_SOCK" ]; then
+    ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+fi
+'';
+
+  home.file.".envrc".text = ''
+    export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+    export P4PORT="rsh:ssh -2 -q -a -x -l p4source p4.source.akamai.com"
+    #PATH_add /home/ssosik/.local/bin
+    #PATH_add $HOME/bin
+    #PATH_add $HOME/go/bin
+    #PATH_add /usr/local/go/bin
+    #export GOPATH=$HOME/gocode
+    #export GOROOT=$HOME/go
+    #PATH_add $HOME/.cargo/bin
+    export W="$HOME/workspace"
+    export VAULT_CLIENT_CERT=$HOME/.certs/$USER-testnet.crt
+    export VAULT_CLIENT_KEY=$HOME/.certs/$USER-testnet.key
+    export VAULT_CACERT=$HOME/.certs/nss1-canonical_ca_roots.pem
+    export CLIENT_CERT=$HOME/.certs/$USER.crt
+    export CLIENT_KEY=$HOME/.certs/$USER.key
+    export CACERT=$HOME/.certs/root_certs.pem
+    '';
 
   #programs.starship = {
   #  enable = true;
@@ -207,12 +231,13 @@ in {
     extraConfig = ''
       set -g default-shell /home/ssosik/.nix-profile/bin/zsh
       set -g default-terminal "xterm-256color"
-      set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+      #set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
       set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
+      set -g update-environment "SSH_AUTH_SOCK"
     '';
     keyMode = "vi";
   };
-  
+
   programs.vim = {
     enable = true;
     extraConfig = builtins.readFile "/home/ssosik/.config/nixpkgs/vimrc";
@@ -278,11 +303,12 @@ in {
       COMPLETION_WAITING_DOTS = true;
       ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
       POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
+      #SSH_AUTH_SOCK = ".ssh/ssh_auth_sock";
     };
     envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux" 
+      plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux"
     };
   };
 
