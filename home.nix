@@ -26,9 +26,9 @@ in {
     NIX_PROFILES = "/nix/var/nix/profiles/default /home/ssosik/.nix-profile";
     NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
     NSS_DEFAULT_DB_TYPE = "sql";
-    PATH = "/home/ssosik/.nix-profile/bin:$PATH";
-    SHELL = "/home/ssosik/.nix-profile/bin/zsh";
-    LOCALE_ARCHIVE = "/usr/lib/locale/locale-archive";
+    #PATH = "/home/ssosik/.nix-profile/bin:$PATH";
+    #SHELL = "/home/ssosik/.nix-profile/bin/zsh";
+    #LOCALE_ARCHIVE = "/usr/lib/locale/locale-archive";
   };
 
   home.packages = [
@@ -56,7 +56,7 @@ in {
     enableZshIntegration = true;
   };
 
-  #programs.command-not-found.enable = true;
+  programs.command-not-found.enable = true;
 
   programs.direnv = {
     enable = true;
@@ -160,17 +160,17 @@ in {
     };
   };
 
-  programs.tmux = {
-    enable = true;
-    extraConfig = ''
-      set -g default-shell /home/ssosik/.nix-profile/bin/zsh
-      set -g default-terminal "xterm-256color"
-      #set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
-      set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
-      set -g update-environment "SSH_AUTH_SOCK"
-    '';
-    keyMode = "vi";
-  };
+#  programs.tmux = {
+#    enable = true;
+#    #extraConfig = ''
+#    #  set -g default-shell /home/ssosik/.nix-profile/bin/zsh
+#    #  set -g default-terminal "xterm-256color"
+#    #  #set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+#    #  set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
+#    #  set -g update-environment "SSH_AUTH_SOCK"
+#    #'';
+#    keyMode = "vi";
+#  };
 
   programs.vim = {
     enable = true;

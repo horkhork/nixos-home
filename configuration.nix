@@ -158,5 +158,6 @@ in
   };
 
   #home-manager.users.steve = import "/etc/nixos/${config.networking.hostName}.nix" pkgs;
+  #home-manager.users.steve = {};
 
 }
