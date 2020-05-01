@@ -240,7 +240,7 @@ fi
 
   programs.vim = {
     enable = true;
-    extraConfig = builtins.readFile "/home/ssosik/.config/nixpkgs/vimrc";
+    extraConfig = builtins.readFile "/home/ssosik/.config/nixpkgs/dot.vimrc";
     #settings = {
     #   relativenumber = true;
     #   number = true;
