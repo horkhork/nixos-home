@@ -20,12 +20,12 @@ in {
   #home.language.base = "en_US.UTF-8";
 
   home.sessionVariables = {
-    LESSCLOSE = "/usr/bin/lesspipe %s %s";
+    #LESSCLOSE = "/usr/bin/lesspipe %s %s";
     #LESSOPEN =| "/usr/bin/lesspipe %s";
-    NIX_PATH = "/home/ssosik/.nix-defexpr/channels";
-    NIX_PROFILES = "/nix/var/nix/profiles/default /home/ssosik/.nix-profile";
-    NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
-    NSS_DEFAULT_DB_TYPE = "sql";
+    #NIX_PATH = "/home/ssosik/.nix-defexpr/channels";
+    #NIX_PROFILES = "/nix/var/nix/profiles/default /home/ssosik/.nix-profile";
+    #NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+    #NSS_DEFAULT_DB_TYPE = "sql";
     #PATH = "/home/ssosik/.nix-profile/bin:$PATH";
     #SHELL = "/home/ssosik/.nix-profile/bin/zsh";
     #LOCALE_ARCHIVE = "/usr/lib/locale/locale-archive";
