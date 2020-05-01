@@ -1,11 +1,49 @@
 { config, pkgs, ... }:
 
 with import <nixpkgs> {};
+#with builtins;
+#with lib;
+#with import <home-manager/modules/lib/dag.nix> { inherit lib; };
+
+#let
+#dotfiles = stdenv.mkDerivation {
+#   name = "dotfiles";
+#   src = fetchFromGitHub {
+#      owner = "horkhork";
+#      repo = "dotfiles";
+#      rev = "master";
+#      sha256 = "ce6d7aa7a26a6b1edf6ab5261c2f982fff2d57fd2e861fb02cc4c21d5ddd9963";
+#   };
+#   installPhase = ''
+#     mkdir -p $out
+#   '';
+#};
+#in {
 
 let
   homedir = builtins.getEnv "HOME";
   workspace = homedir + "/workspace";
 
+  createP4Client = pkgs.writeShellScriptBin "createP4Client" ''
+name=$1 # client name to create
+template=$2 # client to use as a template
+  '';
+
+  vaultWorkspace = stdenv.mkDerivation {
+    name = "fetch-vault-repo";
+    src = builtins.fetchGit {
+      url = "ssh://git@git.source.akamai.com:7999/sources/vault.git";
+      rev = "4c647e4a9931cff3614e779203835285212e409e";
+    };
+    #buildInputs = [ homedir ];
+    buildPhase = ''
+      echo BUILD OUT $out $src ${workspace} foo
+    '';
+    installPhase = ''
+      echo INSTALL OUT $out
+      mkdir -p $out
+    '';
+  };
 in {
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -15,9 +53,9 @@ in {
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "20.03";
+  home.stateVersion = "19.09";
 
-  #home.language.base = "en_US.UTF-8";
+  home.language.base = "en_US.UTF-8";
 
   home.sessionVariables = {
     LESSCLOSE = "/usr/bin/lesspipe %s %s";
@@ -35,7 +73,6 @@ in {
     pkgs.asciidoc
     pkgs.curl
     pkgs.gcc
-    pkgs.go
     pkgs.httpie
     pkgs.k6
     pkgs.pandoc
@@ -47,8 +84,7 @@ in {
     pkgs.wget
     pkgs.zsh-powerlevel10k
     pkgs.nerdfonts
-    pkgs.terraform
-    pkgs.vault
+    vaultWorkspace
   ];
 
   programs.broot = {
@@ -56,7 +92,7 @@ in {
     enableZshIntegration = true;
   };
 
-  #programs.command-not-found.enable = true;
+  programs.command-not-found.enable = true;
 
   programs.direnv = {
     enable = true;
@@ -132,15 +168,45 @@ in {
 
   programs.ssh = {
     enable = true;
+    #matchBlocks = {
+    #  "git.source.akamai.com" = {
+    #    identityFile = "/home/ssosik/.ssh/2020-01-10";
+    #    extraOptions = { StrictHostKeyChecking = "No"; };
+    #  };
+    #  "p4.source.akamai.com" = {
+    #    identityFile = "/home/ssosik/.ssh/2020-01-10";
+    #    extraOptions = { StrictHostKeyChecking = "No"; };
+    #  };
+    #  "p4.ops.akamai.com" = {
+    #    identityFile = "/home/ssosik/.ssh/2020-01-10";
+    #    extraOptions = { StrictHostKeyChecking = "No"; };
+    #  };
+    #};
   };
-#  home.file.".ssh/rc".text = ''
-#if [ ! -S ~/.ssh/ssh_auth_sock ] && [ -S "$SSH_AUTH_SOCK" ]; then
-#    ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
-#fi
-#'';
+  home.file.".ssh/rc".text = ''
+if [ ! -S ~/.ssh/ssh_auth_sock ] && [ -S "$SSH_AUTH_SOCK" ]; then
+    ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+fi
+'';
 
   home.file.".envrc".text = ''
-'';
+    export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+    export P4PORT="rsh:ssh -2 -q -a -x -l p4source p4.source.akamai.com"
+    #PATH_add /home/ssosik/.local/bin
+    #PATH_add $HOME/bin
+    #PATH_add $HOME/go/bin
+    #PATH_add /usr/local/go/bin
+    #export GOPATH=$HOME/gocode
+    #export GOROOT=$HOME/go
+    #PATH_add $HOME/.cargo/bin
+    export W="$HOME/workspace"
+    export VAULT_CLIENT_CERT=$HOME/.certs/$USER-testnet.crt
+    export VAULT_CLIENT_KEY=$HOME/.certs/$USER-testnet.key
+    export VAULT_CACERT=$HOME/.certs/nss1-canonical_ca_roots.pem
+    export CLIENT_CERT=$HOME/.certs/$USER.crt
+    export CLIENT_KEY=$HOME/.certs/$USER.key
+    export CACERT=$HOME/.certs/root_certs.pem
+    '';
 
   #programs.starship = {
   #  enable = true;
@@ -174,7 +240,7 @@ in {
 
   programs.vim = {
     enable = true;
-    extraConfig = builtins.readFile "/etc/nixos/dot.vimrc";
+    extraConfig = builtins.readFile "/home/ssosik/.config/nixpkgs/dot.vimrc";
     #settings = {
     #   relativenumber = true;
     #   number = true;
@@ -217,7 +283,7 @@ in {
     ];
   };
 
-  home.file.".config/zsh/.p10k.zsh".text = builtins.readFile "/etc/nixos/dot.p10k.zsh";
+  home.file.".config/zsh/.p10k.zsh".text = builtins.readFile "/home/ssosik/.config/nixpkgs/p10k.cfg";
 
   programs.zsh = {
     enable = true;
@@ -227,24 +293,22 @@ in {
     dotDir = ".config/zsh";
     history = {
       extended = true;
-      save = 50000;
+      save = 100000;
       share = true;
-      size = 50000;
+      size = 100000;
     };
-    #localVariables = {
-    #  #ZSH_TMUX_ITERM2 = true;
-    #  #POWERLEVEL9K_MODE = "nerdfont-complete";
-    #  #COMPLETION_WAITING_DOTS = true;
-    #  #ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
-    #  #POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
-    #  #SSH_AUTH_SOCK = ".ssh/ssh_auth_sock";
-    #};
-    #envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    localVariables = {
+      ZSH_TMUX_ITERM2 = true;
+      POWERLEVEL9K_MODE = "nerdfont-complete";
+      COMPLETION_WAITING_DOTS = true;
+      ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
+      POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
+      #SSH_AUTH_SOCK = ".ssh/ssh_auth_sock";
+    };
+    envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     oh-my-zsh = {
       enable = true;
-          plugins = [ "git" "history" "taskwarrior" "virtualenv" ]; # "zsh-autosuggestions" "tmux" "tmuxinator" "ssh-agent" 
-          theme = "zsh-powerlevel10k/powerlevel10k";
-          custom = "${pkgs.zsh-powerlevel10k}/share/";
+      plugins = [ "git" "history" "taskwarrior" "tmuxinator" "virtualenv" "ssh-agent" ]; # "zsh-autosuggestions" "tmux"
     };
   };
 
