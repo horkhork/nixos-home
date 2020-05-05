@@ -5,11 +5,11 @@
 { config, pkgs, ... }:
 
 let
-  #home-manager = builtins.fetchGit {
-  #  url = "https://github.com/rycee/home-manager.git";
-  #  rev = "98fa8f63b8d7508e84275eb47cd7f3003e6b9510";
-  #  ref = "release-20.03";
-  #};
+  home-manager = builtins.fetchGit {
+    url = "https://github.com/rycee/home-manager.git";
+    rev = "98fa8f63b8d7508e84275eb47cd7f3003e6b9510";
+    ref = "release-20.03";
+  };
 in
 
 {
@@ -23,8 +23,8 @@ in
       # My custom packages
       <nixpkgs-ssosik/dnscrypt-proxy2-blacklist-updater.nix>
 
-      ## Enable home-manager
-      #(import "${home-manager}/nixos")
+      # Enable home-manager
+      (import "${home-manager}/nixos")
 
     ];
 
@@ -61,14 +61,13 @@ in
     bind
     certbot
     git
-    home-manager
     inetutils
     mtr
     service-wrapper
     sysstat
     tmux
     vim
-    #zsh-powerlevel10k
+    zsh-powerlevel10k
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -134,13 +133,13 @@ in
 
   }; # End services
 
-  #programs.zsh = {
-  #  enable = true;
-    #autosuggestions.enable = true;
-    #ohMyZsh.enable = true;
-    #ohMyZsh.theme = "zsh-powerlevel10k";
-    #promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-  #};
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    ohMyZsh.enable = true;
+    ohMyZsh.theme = "zsh-powerlevel10k";
+    promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+  };
 
   programs.vim.defaultEditor = true;
 
@@ -157,7 +156,7 @@ in
     openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8E/PbfpTIDPLYl6+KbfauImwcDRQp4t7azgOjzRckwKHZ0AzfJUKVs7lqTaUFbim0IK83fC9AFAW0Y/sUf5SOu2As5UNxLW4/9ol8tXECOkrgZQK7dVLuCEiVFX2/nf4Rds0XBC1DdpPwJAy909/eXnjUKCR/1QKya3KsNQn9ZPvypZ/mdhxpJZ36DCasExU56tVF3xFfyFX+rIukWRKVOWjB6crEyDR8rv1MR22IhpRhZmq35sjDIn03ZYJ4KzDT6dLPrNolKh+Ys8uhcJKDHEIop3Id6WMU43kZgNiHmGN/0j4Xy1FpYro0EmuFcs4bf1/9k1/4ALAem+yhrr75 linode nix test" ];
   };
 
-  #home-manager.users.steve = import "/etc/nixos/${config.networking.hostName}.nix" pkgs;
+  home-manager.users.steve = import "/etc/nixos/${config.networking.hostName}.nix" pkgs;
   #home-manager.users.steve = {};
 
 }
