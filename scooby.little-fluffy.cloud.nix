@@ -14,7 +14,6 @@
       pkgs.traceroute
       pkgs.unzip
       pkgs.wget
-      #pkgs.zsh-powerlevel10k
       pkgs.nerdfonts
       pkgs.terraform
       pkgs.vault
@@ -34,7 +33,7 @@
       git = {
         enable = true;
         userName = "Steve Sosik";
-        userEmail = "ssosik@akamai.com";
+        userEmail = "ssosik@gmail.com";
         aliases = {
           lg = "log --graph --oneline --decorate --all";
           com = "commit -v";
@@ -71,27 +70,22 @@
         };
       };
 
-      #gpg.enable = true;
-
-      ## Let Home Manager install and manage itself.
-      #home-manager.enable = true;
-
-      #info.enable = true;
-
+      gpg.enable = true;
+      # Let Home Manager install and manage itself.
+      home-manager.enable = true;
+      info.enable = true;
       jq.enable = true;
+      lesspipe.enable = true;
+      newsboat = {
+        enable = true;
+      };
+      readline.enable = true;
 
       #keychain = {
       #  enable = true;
       #  enableZshIntegration = true;
       #};
 
-      #programs.lesspipe.enable = true;
-
-      #newsboat = {
-      #  enable = true;
-      #};
-
-      #readline.enable = true;
 
       taskwarrior = {
         enable = true;
@@ -149,56 +143,56 @@
         ];
       };
 
-      #zsh = {
-      #  enable = true;
-      #  enableAutosuggestions = true;
-      #  enableCompletion = true;
-      #  autocd = true;
-      #  dotDir = ".config/zsh";
-      #  history = {
-      #    extended = true;
-      #    save = 50000;
-      #    share = true;
-      #    size = 50000;
-      #  };
-      #  #localVariables = {
-      #  #  #ZSH_TMUX_ITERM2 = true;
-      #  #  #POWERLEVEL9K_MODE = "nerdfont-complete";
-      #  #  #COMPLETION_WAITING_DOTS = true;
-      #  #  #ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
-      #  #  #POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
-      #  #  #SSH_AUTH_SOCK = ".ssh/ssh_auth_sock";
-      #  #};
-      #  #envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      #  oh-my-zsh = {
-      #    enable = true;
-      #    plugins = [ "git" "history" "taskwarrior" "virtualenv" ]; # "zsh-autosuggestions" "tmux" "tmuxinator" "ssh-agent" 
-      #    theme = "zsh-powerlevel10k/powerlevel10k";
-      #    custom = "${pkgs.zsh-powerlevel10k}/share/";
-      #  };
-      #  #initExtraBeforeCompInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      #  #initExtraBeforeCompInit = builtins.readFile ../../config/zsh/.zshrc;
-      #  #plugins = [ {
-      #  #  name = "powerlevel10k";
+      zsh = {
+        enable = true;
+        enableAutosuggestions = true;
+        enableCompletion = true;
+        autocd = true;
+        #dotDir = ".config/zsh";
+        history = {
+          extended = true;
+          save = 50000;
+          share = true;
+          size = 50000;
+        };
+        #localVariables = {
+        #  #ZSH_TMUX_ITERM2 = true;
+        #  #POWERLEVEL9K_MODE = "nerdfont-complete";
+        #  #COMPLETION_WAITING_DOTS = true;
+        #  #ZSH_CUSTOM = "${pkgs.zsh-powerlevel9k}/share/";
+        #  #POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD = true;
+        #  #SSH_AUTH_SOCK = ".ssh/ssh_auth_sock";
+        #};
+        #envExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        #oh-my-zsh = {
+        #  enable = true;
+        #  plugins = [ "git" "history" "taskwarrior" "virtualenv" ]; # "zsh-autosuggestions" "tmux" "tmuxinator" "ssh-agent" 
+        #  theme = "zsh-powerlevel10k/powerlevel10k";
+        #  custom = "${pkgs.zsh-powerlevel10k}/share/";
+        #};
+        #initExtraBeforeCompInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        #initExtraBeforeCompInit = builtins.readFile ../../config/zsh/.zshrc;
+        #plugins = [ {
+        #  name = "powerlevel10k";
 
-      #  #  #src = pkgs.fetchFromGitHub {
-      #  #  #  owner = "romkatv";
-      #  #  #  repo = "powerlevel10k";
-      #  #  #  rev = "v1.5.0";
-      #  #  #  sha256 = "0z6i9wjjklb4lvr7zjhbphibsyx51psv50gm07mbb0kj9058j6kc";
-      #  #  #};
+        #  #src = pkgs.fetchFromGitHub {
+        #  #  owner = "romkatv";
+        #  #  repo = "powerlevel10k";
+        #  #  rev = "v1.5.0";
+        #  #  sha256 = "0z6i9wjjklb4lvr7zjhbphibsyx51psv50gm07mbb0kj9058j6kc";
+        #  #};
 
-      #  #  #src = builtins.fetchGit {
-      #  #  #  url = "https://github.com/romkatv/powerlevel10k.git";
-      #  #  #  rev = "6a0e7523b232d02854008405a3645031c848922b";
-      #  #  #  ref = "v1.5.0";
-      #  #  #};
+        #  #src = builtins.fetchGit {
+        #  #  url = "https://github.com/romkatv/powerlevel10k.git";
+        #  #  rev = "6a0e7523b232d02854008405a3645031c848922b";
+        #  #  ref = "v1.5.0";
+        #  #};
 
-      #  #  src = pkgs.zsh-powerlevel10k;
-      #  #  file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      #  # }
-      #  #];
-      #};
+        #  src = pkgs.zsh-powerlevel10k;
+        #  file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        # }
+        #];
+      };
 
     }; # End programs
 
