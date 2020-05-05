@@ -105,18 +105,6 @@
         };
       };
 
-      #tmux = {
-      #  enable = true;
-      #  extraConfig = ''
-      #    set -g default-shell /home/ssosik/.nix-profile/bin/zsh
-      #    set -g default-terminal "xterm-256color"
-      #    #set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
-      #    set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
-      #    set -g update-environment "SSH_AUTH_SOCK"
-      #  '';
-      #  keyMode = "vi";
-      #};
-
       vim = {
         enable = true;
         extraConfig = builtins.readFile "/etc/nixos/dot.vimrc";

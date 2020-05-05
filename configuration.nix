@@ -137,7 +137,6 @@ in
     enable = true;
     autosuggestions.enable = true;
     ohMyZsh.enable = true;
-    ohMyZsh.theme = "zsh-powerlevel10k";
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
   };
 
@@ -157,6 +156,4 @@ in
   };
 
   home-manager.users.steve = import "/etc/nixos/${config.networking.hostName}.nix" pkgs;
-  #home-manager.users.steve = {};
-
 }
