@@ -37,7 +37,7 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
-    # Set hostName in hardware-configuration.nix; don't store this file in Git
+    # Set hostName in non-git controlled ./hostname.nix
 
     interfaces = {
       eno1.useDHCP = true;
