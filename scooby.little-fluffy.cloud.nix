@@ -8,17 +8,17 @@
       pkgs.htop
       pkgs.httpie
       pkgs.k6
+      pkgs.nerdfonts
+      pkgs.niv # https://github.com/nmattia/niv
       pkgs.pandoc
       pkgs.pv
       pkgs.python3
       pkgs.ripgrep
+      pkgs.terraform
       pkgs.traceroute
       pkgs.unzip
-      pkgs.wget
-      pkgs.nerdfonts
-      pkgs.terraform
       pkgs.vault
-      pkgs.niv # https://github.com/nmattia/niv
+      pkgs.wget
     ];
 
     services.lorri.enable = true; # https://github.com/target/lorri
