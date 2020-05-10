@@ -17,7 +17,10 @@
       pkgs.nerdfonts
       pkgs.terraform
       pkgs.vault
+      pkgs.niv # https://github.com/nmattia/niv
     ];
+
+    services.lorri.enable = true; # https://github.com/target/lorri
 
     programs = {
       direnv = {
