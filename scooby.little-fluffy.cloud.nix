@@ -5,6 +5,7 @@
       pkgs.curl
       pkgs.gcc
       pkgs.go
+      pkgs.htop
       pkgs.httpie
       pkgs.k6
       pkgs.pandoc
