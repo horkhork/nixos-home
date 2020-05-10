@@ -3,6 +3,7 @@
     home.packages = [
       pkgs.asciidoc
       pkgs.curl
+      pkgs.file
       pkgs.gcc
       pkgs.go
       pkgs.htop

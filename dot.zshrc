@@ -11,3 +11,5 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 alias vi="vim $@"
+
+export PATH=$HOME/.cargo/bin:$PATH
