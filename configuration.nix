@@ -48,7 +48,7 @@ in
     resolvconf.useLocalResolver = true;
 
     firewall = {
-      allowedTCPPorts = [ 8000 8443 53 ]; # 8443 for Unifi UI
+      allowedTCPPorts = [ 8443 53 ]; # 8443 for Unifi UI
       allowedUDPPorts = [ 53 ]; # For remote DNS clients
     };
   };
