@@ -19,6 +19,8 @@ git clone https://github.com/horkhork/nixos-home.git nixos
 cp nixos.install/hardware-configuration.nix nixos/.
 cd nixos
 
+cp hostname.nix.tmpl hostname.nix
+
 nixos-rebuild switch --upgrade
 
 sudo chgrp -R nix /etc/nixos
