@@ -1,6 +1,9 @@
 #!/bin/sh
-#
-# Complete install
+
+set -euxo pipefail
+
+# Complete the install; set the channels, rebuild the system, install my custom
+# configuration.nix
 
 # Update the system
 nixos-rebuild switch --upgrade
