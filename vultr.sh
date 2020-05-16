@@ -62,7 +62,7 @@ tee /mnt/etc/nixos/configuration.nix << EOF
     ];
 
   environment.systemPackages = with pkgs; [
-    vim
+    vim git
   ];
 
   # Use the GRUB 2 boot loader.
