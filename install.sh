@@ -9,7 +9,8 @@ nix-channel --add https://nixos.org/channels/nixos-20.03 nixos
 nix-channel --add https://horkhork.github.io/nixpkgs-ssosik/
 nix-channel --update
 
-cp /etc/nixos/full-configuration.nix /etc/nixos/configuration.nix
+unlink /etc/nixos/configuration.nix
+ln -s /etc/nixos/full-configuration.nix /etc/nixos/configuration.nix
 mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/steve
 
 nixos-rebuild switch --upgrade

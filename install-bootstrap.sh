@@ -15,7 +15,7 @@ cd nixos
 cp hostname.nix.tmpl hostname.nix
 sed -i 's/CHANGEME/'$1'/g' hostname.nix
 
-cp bootstrap-configuration.nix configuration.nix
+ln -s bootstrap-configuration.nix configuration.nix
 
 nixos-rebuild switch --upgrade
 
