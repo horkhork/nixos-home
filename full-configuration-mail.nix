@@ -20,8 +20,8 @@ in
 
       ./hostname.nix
 
-      # My custom packages
-      <nixpkgs-ssosik/dnscrypt-proxy2-blacklist-updater.nix>
+      ## My custom packages
+      #<nixpkgs-ssosik/dnscrypt-proxy2-blacklist-updater.nix>
 
       # Enable home-manager
       (import "${home-manager}/nixos")
@@ -81,6 +81,11 @@ in
     virusScanning = false;
   };
 
+  security.acme = {
+    email = "postmaster@little-fluffy.cloud";
+    acceptTerms = true;
+  };
+
   system.stateVersion = "20.03";
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
@@ -130,122 +135,122 @@ in
   programs.mtr.enable = true;
   # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
-  # Enable DNSCrypt
-  systemd.services.dnscrypt-proxy2.serviceConfig = {
-    StateDirectory = "dnscrypt-proxy2";
-  };
+  ## Enable DNSCrypt
+  #systemd.services.dnscrypt-proxy2.serviceConfig = {
+  #  StateDirectory = "dnscrypt-proxy2";
+  #};
 
   services = {
-    dnscrypt-proxy2 = {
-      enable = true;
-      settings = {
-        listen_addresses = [ "0.0.0.0:53" ];
-        ipv6_servers = true;
-        require_dnssec = true;
-        log_level = 2;
+    #dnscrypt-proxy2 = {
+    #  enable = true;
+    #  settings = {
+    #    listen_addresses = [ "0.0.0.0:53" ];
+    #    ipv6_servers = true;
+    #    require_dnssec = true;
+    #    log_level = 2;
 
-        query_log.file = "/var/lib/dnscrypt-proxy2/query.log";
+    #    query_log.file = "/var/lib/dnscrypt-proxy2/query.log";
 
-        blacklist = {
-          blacklist_file = "/var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt";
-          log_file = "/var/lib/dnscrypt-proxy2/blocked.log";
-        };
+    #    blacklist = {
+    #      blacklist_file = "/var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt";
+    #      log_file = "/var/lib/dnscrypt-proxy2/blocked.log";
+    #    };
 
-        sources.public-resolvers = {
-          urls = [
-            "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md"
-            "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md"
-          ];
-          cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
-          minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-          refresh_delay = 72;
-        };
+    #    sources.public-resolvers = {
+    #      urls = [
+    #        "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md"
+    #        "https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md"
+    #      ];
+    #      cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
+    #      minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+    #      refresh_delay = 72;
+    #    };
 
-        # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v2/public-resolvers.md
-        server_names = [ "doh-crypto-sx" "doh-crypto-sx-ipv6" "doh-eastus-pi-dns" "doh-eastus-pi-dns-ipv6" "cs-usnc" "cloudflare" ];
+    #    # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v2/public-resolvers.md
+    #    server_names = [ "doh-crypto-sx" "doh-crypto-sx-ipv6" "doh-eastus-pi-dns" "doh-eastus-pi-dns-ipv6" "cs-usnc" "cloudflare" ];
 
-      };
-    };
+    #  };
+    #};
 
-    dnscrypt-proxy2-blacklist-updater = {
-      enable = true;
-      blacklist-sources = [
-        "file:domains-blacklist-local-additions.txt"
-        "https://osint.bambenekconsulting.com/feeds/c2-dommasterlist.txt"
-        "https://hosts-file.net/ad_servers.txt"
-        "https://mirror1.malwaredomains.com/files/justdomains"
-        "https://www.malwaredomainlist.com/hostslist/hosts.txt"
-        "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
-        "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt"
-        "https://easylist-downloads.adblockplus.org/easylistchina.txt"
-        "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
-        "https://pgl.yoyo.org/adservers/serverlist.php"
-        "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt"
-        "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt"
-        "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt"
-        "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt"
-        "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt"
-        "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
-        "http://sysctl.org/cameleon/hosts"
-        "https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt"
-        "https://ssl.bblck.me/blacklists/domain-list.txt"
-        "https://someonewhocares.org/hosts/hosts"
-        "https://raw.githubusercontent.com/notracking/hosts-blocklists/master/dnscrypt-proxy/dnscrypt-proxy.blacklist.txt"
-        "https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains"
-        "https://reddestdream.github.io/Projects/MinimalHosts/etc/MinimalHostsBlocker/minimalhosts"
-        "https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
-        "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-        "https://mirror1.malwaredomains.com/files/justdomains"
-        "http://sysctl.org/cameleon/hosts"
-        "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"
-        "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
-        "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
-        "https://hosts-file.net/ad_servers.txt"
-      ];
-      whitelisted-domains = [
-        "163.com"
-        "a-msedge.net"
-        #"amazon.com"
-        "app.link"
-        #"appsflyer.com"
-        "azurewebsites.net"
-        "cdn.optimizely.com"
-        "cdnetworks.com"
-        "cdninstagram.com"
-        "cloudapp.net"
-        "cdn.cloudflare.net"
-        "download.dnscrypt.info"
-        "edgekey.net"
-        "edgesuite.net"
-        "elasticbeanstalk.com"
-        "fastly.net"
-        "github.com"
-        "github.io"
-        "googleadservices.com"
-        "gvt1.com"
-        "gvt2.com"
-        "invalid"
-        "j.mp"
-        "l-msedge.net"
-        "lan"
-        "liveinternet.ru"
-        "localdomain"
-        #"microsoft.com"
-        "msedge.net"
-        "nsatc.net"
-        "ocsp.apple.com"
-        "ovh.net"
-        "polyfill.io"
-        "pusher.com"
-        "pusherapp.com"
-        "raw.githubusercontent.com"
-        "revinate.com"
-        #"s.youtube.com"
-        "spotify.com"
-        "tagcommander.com"
-        "windows.net"
-      ];
-    };
+    #dnscrypt-proxy2-blacklist-updater = {
+    #  enable = true;
+    #  blacklist-sources = [
+    #    "file:domains-blacklist-local-additions.txt"
+    #    "https://osint.bambenekconsulting.com/feeds/c2-dommasterlist.txt"
+    #    "https://hosts-file.net/ad_servers.txt"
+    #    "https://mirror1.malwaredomains.com/files/justdomains"
+    #    "https://www.malwaredomainlist.com/hostslist/hosts.txt"
+    #    "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
+    #    "https://easylist-downloads.adblockplus.org/easylist_noelemhide.txt"
+    #    "https://easylist-downloads.adblockplus.org/easylistchina.txt"
+    #    "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+    #    "https://pgl.yoyo.org/adservers/serverlist.php"
+    #    "https://raw.githubusercontent.com/Dawsey21/Lists/master/adblock-list.txt"
+    #    "https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjxlist.txt"
+    #    "https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt"
+    #    "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt"
+    #    "https://s3.amazonaws.com/lists.disconnect.me/simple_malware.txt"
+    #    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
+    #    "http://sysctl.org/cameleon/hosts"
+    #    "https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt"
+    #    "https://ssl.bblck.me/blacklists/domain-list.txt"
+    #    "https://someonewhocares.org/hosts/hosts"
+    #    "https://raw.githubusercontent.com/notracking/hosts-blocklists/master/dnscrypt-proxy/dnscrypt-proxy.blacklist.txt"
+    #    "https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains"
+    #    "https://reddestdream.github.io/Projects/MinimalHosts/etc/MinimalHostsBlocker/minimalhosts"
+    #    "https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
+    #    "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+    #    "https://mirror1.malwaredomains.com/files/justdomains"
+    #    "http://sysctl.org/cameleon/hosts"
+    #    "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"
+    #    "https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt"
+    #    "https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt"
+    #    "https://hosts-file.net/ad_servers.txt"
+    #  ];
+    #  whitelisted-domains = [
+    #    "163.com"
+    #    "a-msedge.net"
+    #    #"amazon.com"
+    #    "app.link"
+    #    #"appsflyer.com"
+    #    "azurewebsites.net"
+    #    "cdn.optimizely.com"
+    #    "cdnetworks.com"
+    #    "cdninstagram.com"
+    #    "cloudapp.net"
+    #    "cdn.cloudflare.net"
+    #    "download.dnscrypt.info"
+    #    "edgekey.net"
+    #    "edgesuite.net"
+    #    "elasticbeanstalk.com"
+    #    "fastly.net"
+    #    "github.com"
+    #    "github.io"
+    #    "googleadservices.com"
+    #    "gvt1.com"
+    #    "gvt2.com"
+    #    "invalid"
+    #    "j.mp"
+    #    "l-msedge.net"
+    #    "lan"
+    #    "liveinternet.ru"
+    #    "localdomain"
+    #    #"microsoft.com"
+    #    "msedge.net"
+    #    "nsatc.net"
+    #    "ocsp.apple.com"
+    #    "ovh.net"
+    #    "polyfill.io"
+    #    "pusher.com"
+    #    "pusherapp.com"
+    #    "raw.githubusercontent.com"
+    #    "revinate.com"
+    #    #"s.youtube.com"
+    #    "spotify.com"
+    #    "tagcommander.com"
+    #    "windows.net"
+    #  ];
+    #};
 
     # Enable the OpenSSH daemon.
     openssh = {
