@@ -24,6 +24,7 @@ sed -i 's/CHANGEME/'$1'/g' hostname.nix
 
 # A little unclear on why this doesn't exist yet, create it manually instead
 mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/steve
+mkdir -p /var/lib/dnscrypt-proxy2
 
 nixos-rebuild switch --upgrade
 
