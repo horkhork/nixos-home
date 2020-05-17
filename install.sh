@@ -20,6 +20,7 @@ cp nixos.install/hardware-configuration.nix nixos/.
 cd nixos
 
 cp hostname.nix.tmpl hostname.nix
+sed -i 's/CHANGEME/'$1'/g' hostname.nix
 
 nixos-rebuild switch --upgrade
 
