@@ -26,7 +26,60 @@ in
       # Enable home-manager
       (import "${home-manager}/nixos")
 
+      (builtins.fetchTarball {
+          url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/v2.3.0/nixos-mailserver-v2.3.0.tar.gz";
+          sha256 = "0lpz08qviccvpfws2nm83n7m2r8add2wvfg9bljx9yxx8107r919";
+      })
+
     ];
+
+  mailserver = {
+    enable = true;
+    fqdn = "mail.little-fluffy.cloud";
+    domains = [ "little-fluffy.cloud" ];
+
+    # A list of all login accounts. To create the password hashes, use
+    # mkpasswd -m sha-512 "super secret password"
+    loginAccounts = {
+        "steve@little-fluffy.cloud" = {
+            hashedPassword = "$6$mvd3/i/r$wuyZ8aqBEwpr692lvKrd2sJ0HQPMknzZqc9J2rrNXL0Gvx3eH0jjnGbrCt0fJjh6A7EDCytXNMXpKCLb2mxDE1";
+
+            aliases = [
+                "postmaster@little-fluffy.cloud"
+            ];
+
+            # Make this user the catchAll address for domains little-fluffy.cloud
+            catchAll = [
+                "little-fluffy.cloud"
+            ];
+        };
+
+    };
+
+    # Extra virtual aliases. These are email addresses that are forwarded to
+    # loginAccounts addresses.
+    extraVirtualAliases = {
+        # address = forward address;
+        "abuse@little-fluffy.cloud" = "steve@little-fluffy.cloud";
+    };
+
+    # Use Let's Encrypt certificates. Note that this needs to set up a stripped
+    # down nginx and opens port 80.
+    certificateScheme = 3;
+
+    # Enable IMAP and POP3
+    enableImap = true;
+    enablePop3 = true;
+    enableImapSsl = true;
+    enablePop3Ssl = true;
+
+    # Enable the ManageSieve protocol
+    enableManageSieve = true;
+
+    # whether to scan inbound emails for viruses (note that this requires at least
+    # 1 Gb RAM for the server. Without virus scanning 256 MB RAM should be plenty)
+    virusScanning = false;
+  };
 
   system.stateVersion = "20.03";
   system.autoUpgrade.enable = true;
@@ -61,9 +114,9 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     bind
-    certbot
     git
     inetutils
+    mkpasswd
     mtr
     service-wrapper
     sysstat
