@@ -2,31 +2,13 @@
 
 set -euxo pipefail
 
-# Complete the install; set the channels, rebuild the system, install my custom
-# configuration.nix
-
-# Update the system
-nixos-rebuild switch --upgrade
+# Complete the install; add updated channels and rebuild the system with the
+# full-configuration.nix
 
 nix-channel --add https://nixos.org/channels/nixos-20.03 nixos
 nix-channel --add https://horkhork.github.io/nixpkgs-ssosik/
 nix-channel --update
 
-cd /etc
-mv nixos nixos.install
-
-git clone https://github.com/horkhork/nixos-home.git nixos
-cp nixos.install/hardware-configuration.nix nixos/.
-cd nixos
-
-cp hostname.nix.tmpl hostname.nix
-sed -i 's/CHANGEME/'$1'/g' hostname.nix
-
-# A little unclear on why this doesn't exist yet, create it manually instead
-mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/steve
+cp /etc/nixos/full-configuration.nix /etc/nixos/configuration.nix
 
 nixos-rebuild switch --upgrade
-
-chgrp -R nix /etc/nixos
-chmod -R ug+rw /etc/nixos
-
