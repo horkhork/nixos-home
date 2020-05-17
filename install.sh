@@ -10,7 +10,9 @@ nix-channel --add https://horkhork.github.io/nixpkgs-ssosik/
 nix-channel --update
 
 unlink /etc/nixos/configuration.nix
-ln -s /etc/nixos/full-configuration.nix /etc/nixos/configuration.nix
+ln -s /etc/nixos/full-configuration-mail.nix /etc/nixos/configuration.nix
 mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/steve
 
 nixos-rebuild switch --upgrade
+
+sudo systemctl restart dnscrypt-proxy2-blacklist-updater.service
