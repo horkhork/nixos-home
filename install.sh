@@ -22,11 +22,11 @@ cd nixos
 cp hostname.nix.tmpl hostname.nix
 sed -i 's/CHANGEME/'$1'/g' hostname.nix
 
-# A little unclear on why this doesn't yet, create it manually instead
+# A little unclear on why this doesn't exist yet, create it manually instead
 mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/steve
 
 nixos-rebuild switch --upgrade
 
-sudo chgrp -R nix /etc/nixos
-sudo chmod -R ug+rw /etc/nixos
+chgrp -R nix /etc/nixos
+chmod -R ug+rw /etc/nixos
 
