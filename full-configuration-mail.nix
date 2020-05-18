@@ -36,7 +36,7 @@ in
   mailserver = {
     enable = true;
     fqdn = "mail.little-fluffy.cloud";
-    domains = [ "little-fluffy.cloud" ];
+    domains = [ "little-fluffy.cloud" "fluffy-little.cloud" ];
 
     # A list of all login accounts. To create the password hashes, use
     # mkpasswd -m sha-512 "super secret password"
@@ -50,7 +50,8 @@ in
 
             # Make this user the catchAll address for domains little-fluffy.cloud
             catchAll = [
-                "little-fluffy.cloud"
+              "little-fluffy.cloud"
+              "fluffy-little.cloud"
             ];
         };
 
@@ -81,6 +82,11 @@ in
     virusScanning = false;
   };
 
+  services.roundcube = {
+    enable = true;
+    hostName = "mail.little-fluffy.cloud";
+  };
+
   security.acme = {
     email = "postmaster@little-fluffy.cloud";
     acceptTerms = true;
@@ -106,8 +112,8 @@ in
     resolvconf.useLocalResolver = true;
 
     firewall = {
-      allowedTCPPorts = [ 53 ]; # 8443 for Unifi UI
-      allowedUDPPorts = [ 53 ]; # For remote DNS clients
+      allowedTCPPorts = [ 443 ]; # 8443 for Unifi UI
+      allowedUDPPorts = [ 443 ]; # For remote DNS clients
     };
   };
 
