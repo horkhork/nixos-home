@@ -8,8 +8,8 @@ set -euxo pipefail
 cd /etc
 mv nixos nixos.install
 
-#git clone https://github.com/horkhork/nixos-home.git nixos
-git clone git@github.com:horkhork/nixos-home.git nixos
+git clone https://github.com/horkhork/nixos-home.git nixos
+#git clone git@github.com:horkhork/nixos-home.git nixos
 cp nixos.install/hardware-configuration.nix nixos/.
 cd nixos
 
