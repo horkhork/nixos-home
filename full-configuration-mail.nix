@@ -42,7 +42,7 @@ in
     # mkpasswd -m sha-512 "super secret password"
     loginAccounts = {
         "steve@little-fluffy.cloud" = {
-            hashedPassword = "$6$mvd3/i/r$wuyZ8aqBEwpr692lvKrd2sJ0HQPMknzZqc9J2rrNXL0Gvx3eH0jjnGbrCt0fJjh6A7EDCytXNMXpKCLb2mxDE1";
+            hashedPassword = "$6$JP4YI90.Zley$0UOShElbb8qNndanXmlIiq3ASQhRqzwnpoaMopnZL8LWniYHHnbMbQ4cKCU9b4z3HMmGWke0pw0RiJWvTII.P/";
 
             aliases = [
                 "postmaster@little-fluffy.cloud"
@@ -93,8 +93,8 @@ in
   };
 
   system.stateVersion = "20.03";
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
+  #system.autoUpgrade.enable = true;
+  #system.autoUpgrade.allowReboot = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
