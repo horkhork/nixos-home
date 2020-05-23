@@ -11,6 +11,8 @@ nix-channel --update
 
 unlink /etc/nixos/configuration.nix
 ln -s /etc/nixos/full-configuration-mail.nix /etc/nixos/configuration.nix
+sudo chgrp -h nix /etc/nixos/configuration.nix
+sudo chmod 664 /etc/nixos/configuration.nix
 mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/steve
 
 nixos-rebuild switch --upgrade
