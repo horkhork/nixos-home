@@ -85,6 +85,9 @@ in
   services.roundcube = {
     enable = true;
     hostName = "mail.little-fluffy.cloud";
+    extraConfig = ''
+      $config['smtp_server'] = "tls://%n";
+    '';
   };
 
   security.acme = {
