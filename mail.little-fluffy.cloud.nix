@@ -9,7 +9,7 @@
       pkgs.htop
       pkgs.httpie
       pkgs.k6
-      pkgs.nerdfonts
+      #pkgs.nerdfonts
       pkgs.niv # https://github.com/nmattia/niv
       pkgs.pandoc
       pkgs.pv

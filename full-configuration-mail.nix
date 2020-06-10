@@ -79,14 +79,6 @@ in
     virusScanning = false;
   };
 
-  services.roundcube = {
-    enable = true;
-    hostName = "mail.little-fluffy.cloud";
-    extraConfig = ''
-      $config['smtp_server'] = "tls://%n";
-    '';
-  };
-
   security.acme = {
     email = "postmaster@little-fluffy.cloud";
     acceptTerms = true;
@@ -143,11 +135,32 @@ in
   # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
   services = {
+
     # Enable the OpenSSH daemon.
     openssh = {
       enable = true;
       permitRootLogin = "no";
       passwordAuthentication = false;
+    };
+
+    roundcube = {
+      enable = true;
+      hostName = "mail.little-fluffy.cloud";
+      extraConfig = ''
+        $config['smtp_server'] = "tls://%n";
+      '';
+    };
+
+    monit = {
+      enable = true;
+      config = ''
+         set daemon 300 with start delay 120
+         set mailserver mail.little-fluffy.cloud
+         set alert root@little-fluffy.cloud
+
+         check filesystem rootfs with path /dev/vda3
+                if space usage > 65% then alert
+      '';
     };
 
   }; # End services
