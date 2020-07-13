@@ -165,7 +165,7 @@ in
          set alert root@little-fluffy.cloud
 
          check filesystem rootfs with path /dev/vda3
-                if space usage > 65% then alert
+                if space usage > 30% then alert
       '';
     };
 
