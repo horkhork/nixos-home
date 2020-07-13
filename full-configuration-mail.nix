@@ -30,6 +30,12 @@ in
 
     ];
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   mailserver = {
     enable = true;
     fqdn = "mail.little-fluffy.cloud";
@@ -112,7 +118,7 @@ in
 
   time.timeZone = "America/New_York";
 
-  virtualisation.docker.enable = true;
+  #virtualisation.docker.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -121,7 +127,7 @@ in
     git
     inetutils
     mkpasswd
-    mtr
+    #mtr
     service-wrapper
     sysstat
     tmux
@@ -131,7 +137,7 @@ in
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.mtr.enable = true;
+  #programs.mtr.enable = true;
   # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
   services = {

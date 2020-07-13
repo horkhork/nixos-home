@@ -1,34 +1,34 @@
 { pkgs, ... }:
 {
     home.packages = [
-      pkgs.asciidoc
-      pkgs.curl
-      pkgs.file
-      pkgs.gcc
-      pkgs.go
-      pkgs.htop
-      pkgs.httpie
-      pkgs.k6
+      #pkgs.asciidoc
+      #pkgs.curl
+      #pkgs.file
+      #pkgs.gcc
+      #pkgs.go
+      #pkgs.htop
+      #pkgs.httpie
+      #pkgs.k6
       #pkgs.nerdfonts
       pkgs.niv # https://github.com/nmattia/niv
-      pkgs.pandoc
+      #pkgs.pandoc
       pkgs.pv
-      pkgs.python3
+      #pkgs.python3
       pkgs.ripgrep
-      pkgs.terraform
+      #pkgs.terraform
       pkgs.traceroute
-      pkgs.unzip
-      pkgs.vault
-      pkgs.wget
+      #pkgs.unzip
+      #pkgs.vault
+      #pkgs.wget
     ];
 
-    services.lorri.enable = true; # https://github.com/target/lorri
+    #services.lorri.enable = true; # https://github.com/target/lorri
 
     programs = {
-      direnv = {
-        enable = true;
-        enableZshIntegration = true;
-      };
+      #direnv = {
+      #  enable = true;
+      #  enableZshIntegration = true;
+      #};
 
       fzf = {
         enable = true;
@@ -78,12 +78,12 @@
       gpg.enable = true;
       # Let Home Manager install and manage itself.
       home-manager.enable = true;
-      info.enable = true;
+      #info.enable = true;
       jq.enable = true;
       lesspipe.enable = true;
-      newsboat = {
-        enable = true;
-      };
+      #newsboat = {
+      #  enable = true;
+      #};
       readline.enable = true;
 
       #keychain = {
@@ -116,7 +116,7 @@
           pkgs.vimPlugins.ale
           pkgs.vimPlugins.ansible-vim
           pkgs.vimPlugins.calendar-vim
-          pkgs.vimPlugins.direnv-vim
+          #pkgs.vimPlugins.direnv-vim
           pkgs.vimPlugins.emmet-vim
           pkgs.vimPlugins.fzf-vim
           pkgs.vimPlugins.goyo-vim
@@ -134,7 +134,7 @@
           pkgs.vimPlugins.vim-eunuch
           pkgs.vimPlugins.vim-fugitive
           pkgs.vimPlugins.vim-gitgutter
-          pkgs.vimPlugins.vim-go
+          #pkgs.vimPlugins.vim-go
           pkgs.vimPlugins.vim-markdown
           pkgs.vimPlugins.vim-multiple-cursors
           pkgs.vimPlugins.vim-nix
