@@ -36,6 +36,12 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   networking = {
     # Set hostName in non-git controlled ./hostname.nix
 
@@ -152,7 +158,7 @@ in
         "https://hosts-file.net/ad_servers.txt"
       ];
       whitelisted-domains = [
-        "163.com"
+        #"163.com"
         "a-msedge.net"
         #"amazon.com"
         "app.link"
@@ -177,7 +183,7 @@ in
         "j.mp"
         "l-msedge.net"
         "lan"
-        "liveinternet.ru"
+        #"liveinternet.ru"
         "localdomain"
         #"microsoft.com"
         "msedge.net"
@@ -207,6 +213,34 @@ in
       enable = true;
       openPorts = true;
       unifiPackage = pkgs.unifiStable;
+    };
+
+    monit = {
+      enable = true;
+      config = ''
+         set daemon 300 with start delay 120
+         set mailserver smtp.little-fluffy.cloud port 587
+           username monit@scooby.little-fluffy.cloud password XXXXX
+           using tls
+         set alert root@little-fluffy.cloud
+         set eventqueue basedir /var/monit slots 5000
+
+         check filesystem rootfs with path /dev/sda1
+           if space usage > 30% then alert
+
+         check file dnscrypt-proxy-blacklist.txt with path
+           /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt
+           if timestamp > 1 hour then alert
+
+         check program SystemDegraded with path "/run/current-system/sw/bin/systemctl is-system-running"
+           if status != 0 then alert
+
+         check host stupa-net-dnscrypt with address 127.0.0.1
+            if failed port 53 type udp protocol dns with timeout 2 seconds 3 times within 3 cycles then alert
+
+         check process unifi matching "unifi/run"
+           if failed host localhost port 8443 protocol HTTPS request "/setup/" then alert
+      '';
     };
 
   }; # End services
