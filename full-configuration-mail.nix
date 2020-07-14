@@ -39,7 +39,7 @@ in
   mailserver = {
     enable = true;
     fqdn = "mail.little-fluffy.cloud";
-    domains = [ "little-fluffy.cloud" "fluffy-little.cloud" ];
+    domains = [ "little-fluffy.cloud" "scooby.little-fluffy.cloud" "fluffy-little.cloud" ];
 
     # A list of all login accounts. To create the password hashes, use
     # mkpasswd -m sha-512 "super secret password"
@@ -58,6 +58,9 @@ in
             ];
         };
 
+        "monit@scooby.little-fluffy.cloud" = {
+            hashedPassword = "$6$nWSLeS8kRWL$IPpKa9SZlMJ8/Q/hy28BUSIrrODhVSeprc34Mf/Qbr5PrLEB09rRzmBj9hbAlxr6pg.h329nXIHA/HxsuQ7N4.";
+        };
     };
 
     # Extra virtual aliases. These are email addresses that are forwarded to
