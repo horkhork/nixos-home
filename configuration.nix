@@ -230,7 +230,7 @@ in
 
          check file dnscrypt-proxy-blacklist.txt with path
            /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt
-           if timestamp > 1 hour then alert
+           if timestamp > 25 hour then alert
 
          check program SystemDegraded with path "/run/current-system/sw/bin/systemctl is-system-running"
            if status != 0 then alert
