@@ -225,8 +225,8 @@ in
          set alert root@little-fluffy.cloud
          set eventqueue basedir /var/monit slots 5000
 
-         check filesystem rootfs with path /dev/sda1
-           if space usage > 30% then alert
+         check filesystem scooby-rootfs with path /dev/sda1
+           if space usage > 50% then alert
 
          check file dnscrypt-proxy-blacklist.txt with path
            /var/lib/dnscrypt-proxy2/dnscrypt-proxy-blacklist.txt
