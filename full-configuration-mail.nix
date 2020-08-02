@@ -114,7 +114,7 @@ in
     resolvconf.useLocalResolver = true;
 
     firewall = {
-      allowedTCPPorts = [ 443 ]; # 8443 for Unifi UI
+      allowedTCPPorts = [ 443 ];
       allowedUDPPorts = [ 443 ]; # For remote DNS clients
     };
   };
@@ -150,6 +150,8 @@ in
       enable = true;
       permitRootLogin = "no";
       passwordAuthentication = false;
+      ports = [ 64122 ];
+      openFirewall = true;
     };
 
     roundcube = {
