@@ -61,6 +61,10 @@ in
         "monit@scooby.little-fluffy.cloud" = {
             hashedPassword = "$6$nWSLeS8kRWL$IPpKa9SZlMJ8/Q/hy28BUSIrrODhVSeprc34Mf/Qbr5PrLEB09rRzmBj9hbAlxr6pg.h329nXIHA/HxsuQ7N4.";
         };
+
+        "alerts@scooby.little-fluffy.cloud" = {
+            hashedPassword = "$6$VlvVu5JEWEmUEHw$mQtUeYz9FZmO2b1kR9rqe09y/DBwhATM4WdcDKLnn07kQQ5XdozdcQRoGAPoDn4IbBisS5CWLmrw1aa6IUPeh.";
+        };
     };
 
     # Extra virtual aliases. These are email addresses that are forwarded to
