@@ -8,7 +8,7 @@ let
   home-manager = builtins.fetchGit {
     url = "https://github.com/rycee/home-manager.git";
     rev = "98fa8f63b8d7508e84275eb47cd7f3003e6b9510";
-    ref = "release-20.03";
+    ref = "release-21.03";
   };
 in
 
@@ -97,7 +97,7 @@ in
     acceptTerms = true;
   };
 
-  system.stateVersion = "20.03";
+  system.stateVersion = "21.05";
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
 
